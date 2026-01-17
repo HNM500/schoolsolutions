@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -73,25 +74,27 @@ function App() {
   const isSolutionsPage = currentPath === '#/solutions';
 
   return (
-    <div className="min-h-screen bg-beige-light">
-      <Header />
-      <main>
-        {isAboutPage ? (
-          <AboutPage />
-        ) : isSolutionsPage ? (
-          <SolutionsPage />
-        ) : (
-          <>
-            <Hero />
-            <About isSummary={true} />
-            <SchoolsSection />
-            <Testimonials />
-            <Contact />
-          </>
-        )}
-      </main>
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen bg-beige-light dark:bg-navy-dark transition-colors duration-300">
+        <Header />
+        <main>
+          {isAboutPage ? (
+            <AboutPage />
+          ) : isSolutionsPage ? (
+            <SolutionsPage />
+          ) : (
+            <>
+              <Hero />
+              <About isSummary={true} />
+              <SchoolsSection />
+              <Testimonials />
+              <Contact />
+            </>
+          )}
+        </main>
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
 

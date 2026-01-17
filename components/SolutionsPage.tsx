@@ -72,8 +72,16 @@ const SolutionsPage: React.FC = () => {
                       style={{ width: `${shiftPercentage}%` }}
                     >
                       <div className="bg-white p-6 rounded-sm border border-beige-accent h-40 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all group/card">
-                        <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mb-4 group-hover/card:bg-royal/10 transition-colors">
-                          <i className={`fas ${school.icon} text-royal text-xl`}></i>
+                        <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mb-4 group-hover/card:bg-royal/10 transition-colors overflow-hidden">
+                          {school.logo ? (
+                            <img 
+                              src={school.logo} 
+                              alt={school.name}
+                              className="w-full h-full object-contain p-1"
+                            />
+                          ) : (
+                            <i className={`fas ${school.icon} text-royal text-xl`}></i>
+                          )}
                         </div>
                         <p className="text-[11px] font-bold text-navy uppercase tracking-widest leading-tight">
                           {school.name}

@@ -144,19 +144,19 @@ export const ACHIEVEMENTS: Achievement[] = [
 ];
 
 export const CLIENT_SCHOOLS = [
-  { name: "GEMS WORLD ACADEMY", location: "Switzerland", icon: "fa-school" },
+  { name: "GEMS WORLD ACADEMY", location: "Switzerland", icon: "fa-school", logo: "/Logos/GemsWorldAcademy_Logo.png" },
   { name: "KOLEJ TUANKU JA'AFAR", location: "Malaysia", icon: "fa-building-columns" },
-  { name: "INTERNATIONAL SCHOOL OF LAUSANNE", location: "Switzerland", icon: "fa-landmark" },
-  { name: "AMERICAN COOPERATIVE SCHOOL", location: "Tunisia", icon: "fa-graduation-cap" },
+  { name: "INTERNATIONAL SCHOOL OF LAUSANNE", location: "Switzerland", icon: "fa-landmark", logo: "/Logos/IntSchoolLausanne_Logo.png" },
+  { name: "AMERICAN COOPERATIVE SCHOOL", location: "Tunisia", icon: "fa-graduation-cap", logo: "/Logos/ACST_Logo.png" },
   { name: "KING ABDULAZIZ INTERNATIONAL SCHOOL", location: "Saudi Arabia", icon: "fa-school-flag" },
-  { name: "EXUPERY INTERNATIONAL SCHOOL", location: "Latvia", icon: "fa-book-open" },
-  { name: "INTERNATIONAL SCHOOL OF TANGANYIKA", location: "Tanzania", icon: "fa-earth-africa" },
-  { name: "DY PATIL INTERNATIONAL SCHOOL", location: "Belgium", icon: "fa-shield-halved" },
-  { name: "RU’YA BILINGUAL SCHOOL", location: "Kuwait", icon: "fa-chalkboard-user" },
+  { name: "EXUPERY INTERNATIONAL SCHOOL", location: "Latvia", icon: "fa-book-open", logo: "/Logos/ExuperyIntSchool_Logo.png" },
+  { name: "INTERNATIONAL SCHOOL OF TANGANYIKA", location: "Tanzania", icon: "fa-earth-africa", logo: "/Logos/IntSchoolTanganyika_Logo.png" },
+  { name: "DY PATIL INTERNATIONAL SCHOOL", location: "Belgium", icon: "fa-shield-halved", logo: "/Logos/DYPatil_Logo.png" },
+  { name: "RU’YA BILINGUAL SCHOOL", location: "Kuwait", icon: "fa-chalkboard-user", logo: "/Logos/RuyaBilingualSchool_Logo.png" },
   { name: "ADVANCED LEARNING SCHOOLS", location: "Saudi Arabia", icon: "fa-lightbulb" },
   { name: "MOSCOW ECONOMIC SCHOOL", location: "Russia", icon: "fa-building" },
-  { name: "THE DWIGHT SCHOOL", location: "USA", icon: "fa-flag-usa" },
+  { name: "THE DWIGHT SCHOOL", location: "USA", icon: "fa-flag-usa", logo: "/Logos/Dwight.png" },
   { name: "NAZARBAYEV INTELLECTUAL SCHOOL", location: "Kazakhstan", icon: "fa-atom" },
-  { name: "AGA KHAN ACADEMY", location: "Kenya", icon: "fa-star" },
-  { name: "INTERNATIONAL SCHOOL OF ABERDEEN", location: "UK", icon: "fa-crown" }
+  { name: "AGA KHAN ACADEMY", location: "Kenya", icon: "fa-star", logo: "/Logos/AgaKhanAcademy_Logo.png" },
+  { name: "INTERNATIONAL SCHOOL OF ABERDEEN", location: "UK", icon: "fa-crown", logo: "/Logos/IntSchoolAberdeen.png" }
 ];
