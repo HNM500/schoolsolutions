@@ -91,8 +91,8 @@ const AboutPage: React.FC = () => {
             </div>
 
             <div className="mt-20 text-center">
-                <a 
-                    href="#contact" 
+                <a
+                    href="/#contact"
                     className="inline-block border-2 border-navy text-navy px-12 py-5 rounded-sm font-bold uppercase tracking-widest hover:bg-navy hover:text-white transition-all"
                 >
                     Discuss a Partnership

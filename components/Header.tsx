@@ -99,7 +99,7 @@ const Header: React.FC = () => {
                 )
               ))}
               <a
-                href="#contact"
+                href="/#contact"
                 className={`px-6 py-2 rounded-sm text-sm font-semibold transition-all duration-200 ${
                   isScrolled
                     ? 'bg-beige text-navy hover:bg-white'
@@ -157,7 +157,7 @@ const Header: React.FC = () => {
               )
             ))}
             <a
-              href="#contact"
+              href="/#contact"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block mx-2 mt-4 px-6 py-4 bg-beige text-navy text-center rounded-sm font-semibold hover:bg-beige-light active:bg-beige-light transition-colors"
             >
