@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
             <Link to="/" className="text-white/80 hover:text-white transition-colors">Home</Link>
             <Link to="/about" className="text-white/80 hover:text-white transition-colors">About</Link>
             <Link to="/solutions" className="text-white/80 hover:text-white transition-colors">Solutions</Link>
-            <a href="/#resources" className="text-white/80 hover:text-white transition-colors">Resources</a>
+            <Link to="/resources" className="text-white/80 hover:text-white transition-colors">Resources</Link>
           </div>
 
           <div className="flex gap-6">

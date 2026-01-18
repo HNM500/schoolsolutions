@@ -14,12 +14,12 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Navigation links - mix of page routes and anchor links
+  // Navigation links
   const navLinks = [
     { name: 'Home', href: '/', isRoute: true },
     { name: 'About', href: '/about', isRoute: true },
     { name: 'Solutions', href: '/solutions', isRoute: true },
-    { name: 'Resources', href: '/#resources', isRoute: false },
+    { name: 'Resources', href: '/resources', isRoute: true },
   ];
 
   // Handle anchor link clicks

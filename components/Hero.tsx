@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
           <div className="space-y-2">
             <span className="text-royal dark:text-beige font-semibold tracking-widest uppercase text-sm">25+ Years of Excellence</span>
             <h1 className="text-5xl md:text-7xl font-serif text-navy dark:text-beige leading-tight">
-              Empowering International <span className="italic">Schools</span>
+              Empowering International Schools
             </h1>
           </div>
           <p className="text-xl text-gray-700 dark:text-beige/80 leading-relaxed max-w-lg">

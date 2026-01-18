@@ -7,6 +7,8 @@ import Hero from './components/Hero';
 import About from './components/About';
 import AboutPage from './components/AboutPage';
 import SolutionsPage from './components/SolutionsPage';
+import ResourcesPage from './components/ResourcesPage';
+import MultilingualIdentitiesArticle from './components/articles/MultilingualIdentitiesArticle';
 import SchoolsSection from './components/SchoolsSection';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
@@ -72,6 +74,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/solutions" element={<SolutionsPage />} />
+            <Route path="/resources" element={<ResourcesPage />} />
+            <Route path="/resources/multilingual-identities" element={<MultilingualIdentitiesArticle />} />
           </Routes>
         </main>
         <Footer />
