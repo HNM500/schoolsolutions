@@ -1,7 +1,72 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+
+const WEB3FORMS_ACCESS_KEY = '0542d9f0-3ab6-4478-bf64-c1298d8932bc';
+
+type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+interface FormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 const Contact: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    subject: 'School Consultancy',
+    message: '',
+  });
+  const [status, setStatus] = useState<SubmissionStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('submitting');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          ...formData,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          subject: 'School Consultancy',
+          message: '',
+        });
+      } else {
+        setStatus('error');
+        setErrorMessage(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch {
+      setStatus('error');
+      setErrorMessage('Failed to send message. Please check your connection and try again.');
+    }
+  };
+
   return (
     <section id="contact" className="py-24 bg-beige-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,20 +128,56 @@ const Contact: React.FC = () => {
           
           <div className="p-12 lg:p-20 flex flex-col justify-center">
             <h3 className="text-3xl font-serif text-navy mb-8">Request a Consultation</h3>
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+
+            {status === 'success' && (
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+                <p className="text-green-800 font-medium">
+                  Thank you for your message! I'll get back to you soon.
+                </p>
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                <p className="text-red-800 font-medium">{errorMessage}</p>
+              </div>
+            )}
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Name</label>
-                  <input type="text" className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors" placeholder="Your Full Name" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors"
+                    placeholder="Your Full Name"
+                  />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Email</label>
-                  <input type="email" className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors" placeholder="your.email@school.org" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors"
+                    placeholder="your.email@school.org"
+                  />
                 </div>
               </div>
               <div>
                 <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Subject</label>
-                <select className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none bg-transparent transition-colors">
+                <select
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none bg-transparent transition-colors"
+                >
                   <option>School Consultancy</option>
                   <option>School Group Strategic Planning</option>
                   <option>Board Advisory</option>
@@ -86,10 +187,32 @@ const Contact: React.FC = () => {
               </div>
               <div>
                 <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Message</label>
-                <textarea rows={4} className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors resize-none" placeholder="How can I support your institution?"></textarea>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors resize-none"
+                  placeholder="How can I support your institution?"
+                ></textarea>
               </div>
-              <button className="w-full bg-navy text-white py-4 rounded-sm font-bold text-sm uppercase tracking-[0.2em] hover:bg-navy-light transition-all shadow-lg">
-                SEND MESSAGE
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="w-full bg-navy text-white py-4 rounded-sm font-bold text-sm uppercase tracking-[0.2em] hover:bg-navy-light transition-all shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {status === 'submitting' ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    SENDING...
+                  </span>
+                ) : (
+                  'SEND MESSAGE'
+                )}
               </button>
             </form>
           </div>
