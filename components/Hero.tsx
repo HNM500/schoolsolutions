@@ -39,9 +39,11 @@ const Hero: React.FC = () => {
           <div className="absolute -inset-4 bg-navy/5 dark:bg-beige/10 rounded-full blur-3xl group-hover:bg-royal/10 dark:group-hover:bg-beige/20 transition-all"></div>
           
           <div className="relative w-80 h-80 md:w-[500px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-navy bg-white dark:bg-navy">
-            <img 
-              src={profileImage} 
-              alt="Soukeina Mamodhoussen"
+            <img
+              src={profileImage}
+              alt="Soukeina Mamodhoussen - International Educational Consultant"
+              width={500}
+              height={500}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           </div>

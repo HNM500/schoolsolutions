@@ -1,15 +1,13 @@
 
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { SCHOOL_SERVICES, CLIENT_SCHOOLS } from '../constants';
 import ServiceCard from './ServiceCard';
 
 const SolutionsPage: React.FC = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const carouselRef = React.useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   // Logic for carousel: rotate every 3 seconds
   useEffect(() => {
@@ -34,6 +32,15 @@ const SolutionsPage: React.FC = () => {
 
   return (
     <div className="pt-24 animate-fade-in">
+      <Helmet>
+        <title>Educational Solutions & Services | GCC Education</title>
+        <meta name="description" content="Comprehensive educational consulting services including curriculum development, IB workshops, CIS accreditation support, and professional development for international schools." />
+        <link rel="canonical" href="https://gcceducation.com/solutions" />
+        <meta property="og:title" content="Educational Solutions & Services | GCC Education" />
+        <meta property="og:description" content="Comprehensive educational consulting services for international schools worldwide." />
+        <meta property="og:url" content="https://gcceducation.com/solutions" />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="bg-navy py-24 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -74,9 +81,12 @@ const SolutionsPage: React.FC = () => {
                       <div className="bg-white p-6 rounded-sm border border-beige-accent h-40 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all group/card">
                         <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mb-4 group-hover/card:bg-royal/10 transition-colors overflow-hidden">
                           {school.logo ? (
-                            <img 
-                              src={school.logo} 
+                            <img
+                              src={school.logo}
                               alt={school.name}
+                              loading="lazy"
+                              width={48}
+                              height={48}
                               className="w-full h-full object-contain p-1"
                             />
                           ) : (
@@ -115,9 +125,9 @@ const SolutionsPage: React.FC = () => {
       {/* Simple Navigation Back */}
       <section className="py-12 bg-white border-t border-beige-accent/10">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <a href="#/" className="text-navy/50 hover:text-navy transition-colors text-sm uppercase tracking-widest font-bold inline-flex items-center gap-2">
+          <Link to="/" className="text-navy/50 hover:text-navy transition-colors text-sm uppercase tracking-widest font-bold inline-flex items-center gap-2">
             <i className="fas fa-arrow-left"></i> Back to Home
-          </a>
+          </Link>
         </div>
       </section>
     </div>

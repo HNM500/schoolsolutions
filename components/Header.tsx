@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,12 +16,31 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Navigation links - mix of page routes and anchor links
   const navLinks = [
-    { name: 'Home', href: '#/' },
-    { name: 'About', href: '#/about' },
-    { name: 'Solutions', href: '#/solutions' },
-    { name: 'Resources', href: '#resources' },
+    { name: 'Home', href: '/', isRoute: true },
+    { name: 'About', href: '/about', isRoute: true },
+    { name: 'Solutions', href: '/solutions', isRoute: true },
+    { name: 'Resources', href: '/#resources', isRoute: false },
   ];
+
+  // Handle anchor link clicks
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    const hash = href.includes('#') ? href.split('#')[1] : null;
+    if (hash && location.pathname === '/') {
+      e.preventDefault();
+      const element = document.getElementById(hash);
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
@@ -30,39 +51,54 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0">
-            <a href="#/" className="flex flex-col">
+            <Link to="/" className="flex flex-col">
               <span className={`text-xl font-serif font-bold tracking-wider ${
-                isScrolled 
-                  ? 'text-beige dark:text-beige' 
+                isScrolled
+                  ? 'text-beige dark:text-beige'
                   : 'text-navy dark:text-beige'
               }`}>
                 SOUKEINA MAMODHOUSSEN
               </span>
               <span className={`text-[10px] uppercase tracking-[0.2em] font-sans ${
-                isScrolled 
-                  ? 'text-beige-accent dark:text-beige/70' 
+                isScrolled
+                  ? 'text-beige-accent dark:text-beige/70'
                   : 'text-navy-light dark:text-beige/70'
               }`}>
                 Educational Consultancy
               </span>
-            </a>
+            </Link>
           </div>
           
           {/* Desktop Menu */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                    isScrolled 
-                      ? 'text-beige dark:text-beige hover:text-white dark:hover:text-beige-light' 
-                      : 'text-navy dark:text-beige hover:text-royal dark:hover:text-beige-light'
-                  }`}
-                >
-                  {link.name}
-                </a>
+                link.isRoute ? (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                      isScrolled
+                        ? 'text-beige dark:text-beige hover:text-white dark:hover:text-beige-light'
+                        : 'text-navy dark:text-beige hover:text-royal dark:hover:text-beige-light'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => handleAnchorClick(e, link.href)}
+                    className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                      isScrolled
+                        ? 'text-beige dark:text-beige hover:text-white dark:hover:text-beige-light'
+                        : 'text-navy dark:text-beige hover:text-royal dark:hover:text-beige-light'
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                )
               ))}
               <button
                 onClick={toggleTheme}
@@ -120,14 +156,28 @@ const Header: React.FC = () => {
         <div className="md:hidden bg-navy dark:bg-navy-dark text-beige border-t border-navy-light dark:border-beige/20 shadow-2xl">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-4 border-b border-white/5 dark:border-beige/10 text-base font-medium hover:bg-navy-light dark:hover:bg-navy"
-              >
-                {link.name}
-              </a>
+              link.isRoute ? (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-3 py-4 border-b border-white/5 dark:border-beige/10 text-base font-medium hover:bg-navy-light dark:hover:bg-navy"
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => {
+                    handleAnchorClick(e, link.href);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="block px-3 py-4 border-b border-white/5 dark:border-beige/10 text-base font-medium hover:bg-navy-light dark:hover:bg-navy"
+                >
+                  {link.name}
+                </a>
+              )
             ))}
           </div>
         </div>

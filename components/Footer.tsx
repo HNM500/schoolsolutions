@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
@@ -8,15 +9,16 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-center md:text-left">
             <span className="text-lg font-serif font-bold tracking-widest block">SOUKEINA MAMODHOUSSEN</span>
-            <span className="text-[10px] uppercase tracking-widest text-beige-accent">International Educational Consultant</span>
+            <span className="text-[10px] uppercase tracking-widest text-beige-accent block">International Educational Consultant</span>
+            <span className="text-xs text-beige/50 mt-1 block">GCC Education</span>
           </div>
           
           <div className="flex flex-wrap justify-center gap-8 text-sm font-medium">
-            <a href="#/" className="hover:text-white transition-colors">Home</a>
-            <a href="#/about" className="hover:text-white transition-colors">About Me</a>
-            <a href="#schools" className="hover:text-white transition-colors">Services</a>
-            <a href="#testimonials" className="hover:text-white transition-colors">Testimonials</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+            <Link to="/" className="hover:text-white transition-colors">Home</Link>
+            <Link to="/about" className="hover:text-white transition-colors">About Me</Link>
+            <a href="/#solutions" className="hover:text-white transition-colors">Services</a>
+            <a href="/#testimonials" className="hover:text-white transition-colors">Testimonials</a>
+            <a href="/#contact" className="hover:text-white transition-colors">Contact</a>
           </div>
           
           <div className="flex gap-6">

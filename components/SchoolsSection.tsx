@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { SCHOOL_SERVICES, CLIENT_SCHOOLS } from '../constants';
 import ServiceCard from './ServiceCard';
 
@@ -49,18 +50,18 @@ const SchoolsSection: React.FC = () => {
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-          <a 
-            href="#contact" 
+          <a
+            href="/#contact"
             className="bg-navy text-white px-10 py-4 rounded-sm font-bold text-sm uppercase tracking-widest hover:bg-navy-light transition-all shadow-lg inline-flex items-center gap-2"
           >
             ENQUIRE NOW <i className="fas fa-arrow-right"></i>
           </a>
-          <a 
-            href="#/solutions" 
+          <Link
+            to="/solutions"
             className="border-2 border-navy text-navy px-10 py-4 rounded-sm font-bold text-sm uppercase tracking-widest hover:bg-navy hover:text-white transition-all inline-flex items-center gap-2"
           >
             FIND OUT MORE <i className="fas fa-arrow-right"></i>
-          </a>
+          </Link>
         </div>
 
         {/* Schools Carousel */}
@@ -85,9 +86,12 @@ const SchoolsSection: React.FC = () => {
                     <div className="bg-white p-6 rounded-sm border border-beige-accent h-40 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all group/card">
                       <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mb-4 group-hover/card:bg-royal/10 transition-colors overflow-hidden">
                         {school.logo ? (
-                          <img 
-                            src={school.logo} 
+                          <img
+                            src={school.logo}
                             alt={school.name}
+                            loading="lazy"
+                            width={48}
+                            height={48}
                             className="w-full h-full object-contain p-1"
                           />
                         ) : (

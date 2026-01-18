@@ -1,14 +1,20 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ACHIEVEMENTS } from '../constants';
 
 const AboutPage: React.FC = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="pt-24 animate-fade-in">
+      <Helmet>
+        <title>About Soukeina Mamodhoussen | GCC Education</title>
+        <meta name="description" content="Discover the expertise of Soukeina Mamodhoussen - IB Workshop Leader and CIS Evaluation Team Chair with over 20 years of international education experience across four continents." />
+        <link rel="canonical" href="https://gcceducation.com/about" />
+        <meta property="og:title" content="About Soukeina Mamodhoussen | GCC Education" />
+        <meta property="og:description" content="IB Workshop Leader and CIS Evaluation Team Chair with over 20 years of international education experience." />
+        <meta property="og:url" content="https://gcceducation.com/about" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-navy py-24 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -81,9 +87,9 @@ const AboutPage: React.FC = () => {
       {/* Simple Navigation Back */}
       <section className="py-12 bg-white border-t border-beige-accent/10">
         <div className="max-w-7xl mx-auto px-4 text-center">
-            <a href="#/" className="text-navy/50 hover:text-navy transition-colors text-sm uppercase tracking-widest font-bold inline-flex items-center gap-2">
+            <Link to="/" className="text-navy/50 hover:text-navy transition-colors text-sm uppercase tracking-widest font-bold inline-flex items-center gap-2">
                 <i className="fas fa-arrow-left"></i> Back to Home
-            </a>
+            </Link>
         </div>
       </section>
     </div>

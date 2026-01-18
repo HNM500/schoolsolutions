@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -10,50 +12,15 @@ import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.hash || '#/');
+// Home page component
+const HomePage: React.FC = () => {
+  const location = useLocation();
 
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash || '#/';
-      
-      // Only treat hash routes starting with #/ as page routes
-      // Other hashes like #contact, #solutions are anchor links
-      if (hash.startsWith('#/')) {
-        setCurrentPath(hash);
-        window.scrollTo(0, 0);
-      } else if (hash !== '#/') {
-        // For anchor links (like #contact), ensure we're on home page
-        setCurrentPath('#/');
-        // Wait for React to render home page, then scroll to anchor
-        setTimeout(() => {
-          const element = document.querySelector(hash);
-          if (element) {
-            // Account for fixed header height
-            const headerOffset = 80;
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        }, 150);
-      } else {
-        setCurrentPath('#/');
-      }
-    };
-
-    // Handle initial load
-    const initialHash = window.location.hash || '#/';
-    if (initialHash.startsWith('#/')) {
-      setCurrentPath(initialHash);
-    } else if (initialHash !== '#/') {
-      // If page loads with an anchor link, set to home and scroll
-      setCurrentPath('#/');
+    // Handle anchor links on page load (e.g., /#contact)
+    if (location.hash) {
       setTimeout(() => {
-        const element = document.querySelector(initialHash);
+        const element = document.querySelector(location.hash);
         if (element) {
           const headerOffset = 80;
           const elementPosition = element.getBoundingClientRect().top;
@@ -63,34 +30,49 @@ function App() {
             behavior: 'smooth'
           });
         }
-      }, 300);
+      }, 100);
     }
+  }, [location.hash]);
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  return (
+    <>
+      <Helmet>
+        <title>GCC Education | International Educational Consultancy</title>
+        <meta name="description" content="GCC Education offers expert international educational consultancy services. Strategic guidance for schools, curriculum development, IB workshops, and CIS accreditation support." />
+        <link rel="canonical" href="https://gcceducation.com/" />
+      </Helmet>
+      <Hero />
+      <About isSummary={true} />
+      <SchoolsSection />
+      <Testimonials />
+      <Contact />
+    </>
+  );
+};
 
-  const isAboutPage = currentPath === '#/about';
-  const isSolutionsPage = currentPath === '#/solutions';
+// Scroll to top on route change
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
+function App() {
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-beige-light dark:bg-navy-dark transition-colors duration-300">
+        <ScrollToTop />
         <Header />
         <main>
-          {isAboutPage ? (
-            <AboutPage />
-          ) : isSolutionsPage ? (
-            <SolutionsPage />
-          ) : (
-            <>
-              <Hero />
-              <About isSummary={true} />
-              <SchoolsSection />
-              <Testimonials />
-              <Contact />
-            </>
-          )}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/solutions" element={<SolutionsPage />} />
+          </Routes>
         </main>
         <Footer />
       </div>

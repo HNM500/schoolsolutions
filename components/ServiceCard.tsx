@@ -23,7 +23,7 @@ const ServiceCard: React.FC<Props> = ({ service, type }) => {
         ))}
       </ul>
       <div className="mt-8 pt-6 border-t border-gray-100">
-        <a href="#contact" className="text-navy font-bold text-sm uppercase tracking-widest hover:text-royal transition-colors inline-flex items-center gap-2">
+        <a href="/#contact" className="text-navy font-bold text-sm uppercase tracking-widest hover:text-royal transition-colors inline-flex items-center gap-2">
           Enquire Now <i className="fas fa-arrow-right text-xs"></i>
         </a>
       </div>
