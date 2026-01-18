@@ -118,7 +118,7 @@ export const TESTIMONIALS: Testimonial[] = [
 export const ACHIEVEMENTS: Achievement[] = [
   {
     title: "Global Perspective",
-    description: "Experience across 4 continents: Kenya, Tanzania, Tunisia, Switzerland, Belgium, UK, and Oman.",
+    description: "Experience across many different countries, well-versed in various curricula including the British National Curriculum, American Curriculum, French Curriculum, International Baccalaureate, and International Primary Curriculum.",
     icon: "fa-earth-americas"
   },
   {
@@ -138,8 +138,13 @@ export const ACHIEVEMENTS: Achievement[] = [
   },
   {
     title: "AI Integration",
-    description: "Pioneer in integrating AI and gamification into education frameworks.",
+    description: "Pioneer in integrating AI and gamification into education frameworks. Driving digital transformation in international education settings.",
     icon: "fa-microchip"
+  },
+  {
+    title: "Strategic School Improvement",
+    description: "Proven track record partnering with school leadership teams to elevate curriculum standards and instructional quality.",
+    icon: "fa-chart-line"
   }
 ];
 
