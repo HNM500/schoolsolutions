@@ -20,9 +20,9 @@ const Hero: React.FC = () => {
             Strategic consultancy transforming international education through innovation, AI integration, accreditation support, and world-class curricular frameworks for global excellence and institutional growth.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <a 
-              href="#schools" 
-              className="bg-navy dark:bg-beige text-white dark:text-navy px-10 py-4 text-center rounded-sm font-semibold hover:bg-navy-light dark:hover:bg-beige-light transition-all shadow-xl"
+            <a
+              href="/solutions"
+              className="bg-navy text-white px-10 py-4 text-center rounded-sm font-semibold hover:bg-navy-light transition-all shadow-xl"
             >
               EXPLORE OUR SERVICES
             </a>
@@ -35,39 +35,32 @@ const Hero: React.FC = () => {
           </div>
         </div>
         
-        <div className="relative group flex justify-center">
+        <div className="relative group flex justify-center pb-20 sm:pb-0">
           {/* Background glow effect */}
           <div className="absolute -inset-4 bg-gradient-to-br from-royal/10 via-navy/5 to-beige/20 dark:from-beige/10 dark:via-royal/5 dark:to-navy/20 rounded-3xl blur-3xl group-hover:from-royal/20 group-hover:via-navy/10 group-hover:to-beige/30 transition-all duration-500"></div>
 
           {/* Main image card - elongated rectangle */}
           <div
-            className="relative rounded-2xl overflow-hidden border-8 border-white dark:border-navy bg-white dark:bg-navy transform hover:scale-105 transition-transform duration-500"
-            style={{
-              width: '500px',
-              height: '700px',
-              boxShadow: '0 25px 60px -15px rgba(0,0,0,0.35)'
-            }}
+            className="relative rounded-2xl overflow-hidden border-4 sm:border-8 border-white dark:border-navy bg-white dark:bg-navy transform hover:scale-105 transition-transform duration-500 w-full max-w-[280px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[500px] aspect-[5/7] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)]"
           >
             <img
               src={profileImage}
               alt="Soukeina Mamodhoussen - International Educational Consultant"
-              width={500}
-              height={700}
               className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
             />
             {/* Subtle gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-navy/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
 
-          {/* Floating Card */}
-          <div className="absolute bottom-16 -left-8 bg-white dark:bg-navy p-6 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.25)] rounded-xl hidden lg:block border-l-4 border-royal dark:border-beige z-10 transform hover:scale-105 transition-transform duration-300">
-            <div className="flex items-center gap-4">
-              <div className="bg-gradient-to-br from-beige to-beige-light dark:from-beige/30 dark:to-beige/10 p-3 rounded-full shadow-inner">
-                <i className="fas fa-quote-left text-royal dark:text-beige text-xl"></i>
+          {/* Floating Card - repositioned for mobile */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 sm:bottom-8 sm:left-auto sm:-right-4 sm:translate-x-0 lg:bottom-16 lg:-left-8 lg:right-auto bg-white dark:bg-navy p-4 sm:p-6 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.25)] rounded-xl border-l-4 border-royal dark:border-beige z-10 transform hover:scale-105 transition-transform duration-300">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="bg-gradient-to-br from-beige to-beige-light dark:from-beige/30 dark:to-beige/10 p-2 sm:p-3 rounded-full shadow-inner">
+                <i className="fas fa-quote-left text-royal dark:text-beige text-lg sm:text-xl"></i>
               </div>
               <div>
-                <p className="text-sm font-semibold text-navy dark:text-beige">Educational Management Expert</p>
-                <p className="text-xs text-gray-500 dark:text-beige/60">CIS Evaluation Team Chair</p>
+                <p className="text-xs sm:text-sm font-semibold text-navy dark:text-beige">Educational Management Expert</p>
+                <p className="text-[10px] sm:text-xs text-gray-500 dark:text-beige/60">CIS Evaluation Team Chair</p>
               </div>
             </div>
           </div>
