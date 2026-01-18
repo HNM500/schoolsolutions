@@ -36,22 +36,33 @@ const Hero: React.FC = () => {
         </div>
         
         <div className="relative group flex justify-center">
-          <div className="absolute -inset-4 bg-navy/5 dark:bg-beige/10 rounded-full blur-3xl group-hover:bg-royal/10 dark:group-hover:bg-beige/20 transition-all"></div>
-          
-          <div className="relative w-80 h-80 md:w-[500px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl border-8 border-white dark:border-navy bg-white dark:bg-navy">
+          {/* Background glow effect */}
+          <div className="absolute -inset-4 bg-gradient-to-br from-royal/10 via-navy/5 to-beige/20 dark:from-beige/10 dark:via-royal/5 dark:to-navy/20 rounded-3xl blur-3xl group-hover:from-royal/20 group-hover:via-navy/10 group-hover:to-beige/30 transition-all duration-500"></div>
+
+          {/* Main image card - elongated rectangle */}
+          <div
+            className="relative rounded-2xl overflow-hidden border-8 border-white dark:border-navy bg-white dark:bg-navy transform hover:scale-105 transition-transform duration-500"
+            style={{
+              width: '500px',
+              height: '700px',
+              boxShadow: '0 25px 60px -15px rgba(0,0,0,0.35)'
+            }}
+          >
             <img
               src={profileImage}
               alt="Soukeina Mamodhoussen - International Educational Consultant"
               width={500}
-              height={500}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              height={700}
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
             />
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
 
           {/* Floating Card */}
-          <div className="absolute bottom-10 -left-6 bg-white dark:bg-navy p-6 shadow-2xl rounded-lg hidden lg:block border-l-4 border-royal dark:border-beige z-10">
+          <div className="absolute bottom-16 -left-8 bg-white dark:bg-navy p-6 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.25)] rounded-xl hidden lg:block border-l-4 border-royal dark:border-beige z-10 transform hover:scale-105 transition-transform duration-300">
             <div className="flex items-center gap-4">
-              <div className="bg-beige dark:bg-beige/20 p-3 rounded-full">
+              <div className="bg-gradient-to-br from-beige to-beige-light dark:from-beige/30 dark:to-beige/10 p-3 rounded-full shadow-inner">
                 <i className="fas fa-quote-left text-royal dark:text-beige text-xl"></i>
               </div>
               <div>
