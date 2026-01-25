@@ -39,11 +39,11 @@ export const SCHOOL_SERVICES: ServiceItem[] = [
     title: "Language Programme Development",
     description: "Build world-class language learning programmes.",
     points: [
-      "EAL/ESL programme design and implementation",
-      "Home language preservation strategies",
+      "EAL/ESL programme design and translanguaging pedagogies",
+      "Home language preservation & bilingual education models",
       "Multilingual education framework development",
       "Language assessment continua creation",
-      "Whole school language curricular framework"
+      "Whole school language policy & curricular framework"
     ]
   }
 ];
