@@ -1,5 +1,7 @@
-
 import React, { useState } from 'react';
+import { Phone, Mail, Linkedin, MessageCircle, MapPin, Loader2, CheckCircle, Award, Users } from 'lucide-react';
+import { Button } from './ui/button';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const WEB3FORMS_ACCESS_KEY = '0542d9f0-3ab6-4478-bf64-c1298d8932bc';
 
@@ -13,6 +15,7 @@ interface FormData {
 }
 
 const Contact: React.FC = () => {
+  const [sectionRef, isSectionVisible] = useScrollReveal<HTMLElement>({ threshold: 0.1 });
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -67,116 +70,182 @@ const Contact: React.FC = () => {
     }
   };
 
+  const contactInfo = [
+    { icon: Phone, label: 'Call', value: '(+968) 7222 7329' },
+    { icon: MessageCircle, label: 'WhatsApp', value: '(+44) 7944 304 364', href: 'https://wa.me/447944304364' },
+    { icon: Mail, label: 'Email', value: 'soukeina@hotmail.com', href: 'mailto:soukeina@hotmail.com' },
+    { icon: Linkedin, label: 'LinkedIn', value: 'Soukeina Mamodhoussen', href: 'https://linkedin.com/in/soukeina' },
+  ];
+
+  const trustPoints = [
+    { icon: Award, text: 'CIS Evaluation Team Chair' },
+    { icon: Users, text: 'IB Workshop Leader' },
+    { icon: CheckCircle, text: '25+ Years Experience' },
+  ];
+
   return (
-    <section id="contact" className="py-24 bg-beige-light">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow-2xl overflow-hidden grid lg:grid-cols-2">
-          <div className="p-6 sm:p-10 lg:p-20 bg-navy text-white flex flex-col justify-between">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="relative overflow-hidden"
+    >
+      <div className="grid lg:grid-cols-2">
+        {/* Left Panel - Image with Trust Content Overlay */}
+        <div
+          className={`relative bg-charcoal transition-all duration-700 ease-out ${
+            isSectionVisible ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          {/* Background Image */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url('/ss_books.jpg')`,
+            }}
+          />
+
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-charcoal/80" />
+
+          {/* Content */}
+          <div className="relative z-10 h-full flex flex-col justify-between p-5 sm:p-6 lg:p-8">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif mb-6 sm:mb-8">Contact Me Today</h2>
-              <p className="text-beige/70 text-base sm:text-lg mb-8 sm:mb-12">
-                Ready to transform your school's educational landscape or lead your school group to new heights of excellence? Let's connect.
+              <span className="inline-block text-xs font-semibold tracking-[0.3em] uppercase text-terracotta mb-3">
+                Get in Touch
+              </span>
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-serif text-white leading-[1.1] mb-3">
+                Let's Transform{' '}
+                <span className="italic text-terracotta">Education</span>{' '}
+                Together
+              </h2>
+              <p className="text-white/70 text-sm max-w-md leading-relaxed">
+                Ready to elevate your school's educational landscape? I'm here to help you achieve institutional excellence.
               </p>
-              
-              <div className="space-y-5 sm:space-y-8">
-                <div className="flex items-center gap-4 sm:gap-6 group">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/20 flex items-center justify-center group-hover:bg-royal transition-colors flex-shrink-0">
-                    <i className="fas fa-phone text-sm sm:text-base"></i>
-                  </div>
-                  <div>
-                    <p className="text-xs text-beige/50 uppercase tracking-widest mb-1">Call</p>
-                    <p className="text-base sm:text-xl font-medium tracking-wide">(+968) 7222 7329</p>
-                  </div>
-                </div>
+            </div>
 
-                <div className="flex items-center gap-4 sm:gap-6 group">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/20 flex items-center justify-center group-hover:bg-royal transition-colors flex-shrink-0">
-                    <i className="fab fa-whatsapp text-xl sm:text-2xl"></i>
+            {/* Trust Points */}
+            <div className="my-4">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/50 mb-3">Why Consult With Me</p>
+              <div className="space-y-2">
+                {trustPoints.map((point, idx) => (
+                  <div key={idx} className="flex items-center gap-3 group">
+                    <div className="w-8 h-8 rounded-full bg-terracotta/20 flex items-center justify-center group-hover:bg-terracotta/40 transition-colors">
+                      <point.icon className="w-3.5 h-3.5 text-terracotta" />
+                    </div>
+                    <span className="text-white/80 text-sm font-medium">{point.text}</span>
                   </div>
-                  <div>
-                    <p className="text-xs text-beige/50 uppercase tracking-widest mb-1">WhatsApp</p>
-                    <p className="text-base sm:text-xl font-medium tracking-wide">(+44) 7944 304 364</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 sm:gap-6 group">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/20 flex items-center justify-center group-hover:bg-royal transition-colors flex-shrink-0">
-                    <i className="fas fa-envelope text-sm sm:text-base"></i>
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs text-beige/50 uppercase tracking-widest mb-1">Email</p>
-                    <p className="text-base sm:text-xl font-medium tracking-wide truncate">soukeina@hotmail.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 sm:gap-6 group">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-royal/20 flex items-center justify-center group-hover:bg-royal transition-colors flex-shrink-0">
-                    <i className="fab fa-linkedin-in text-sm sm:text-base"></i>
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs text-beige/50 uppercase tracking-widest mb-1">LinkedIn</p>
-                    <a href="https://linkedin.com/in/soukeina" className="text-base sm:text-xl font-medium tracking-wide hover:text-beige transition-colors block truncate">Soukeina Mamodhoussen</a>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
-            
-            <div className="mt-10 sm:mt-16 pt-6 sm:pt-8 border-t border-white/10">
-              <p className="text-sm text-beige/50">Based in Muscat, Oman & London, UK</p>
+
+            {/* Contact Info */}
+            <div className="space-y-2">
+              {contactInfo.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3 group">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-terracotta transition-colors">
+                    <item.icon className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-[9px] text-white/40 uppercase tracking-widest">
+                      {item.label}
+                    </p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target={item.href.startsWith('http') ? '_blank' : undefined}
+                        rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="text-white hover:text-terracotta transition-colors text-sm font-medium"
+                      >
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-white text-sm font-medium">{item.value}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Location */}
+            <div className="pt-4 border-t border-white/10 flex items-center gap-2 mt-auto">
+              <MapPin className="h-3.5 w-3.5 text-white/40" />
+              <p className="text-xs text-white/40">Based in Muscat, Oman & London, UK</p>
             </div>
           </div>
+        </div>
 
-          <div className="p-6 sm:p-10 lg:p-20 flex flex-col justify-center">
-            <h3 className="text-2xl sm:text-3xl font-serif text-navy mb-6 sm:mb-8">Request a Consultation</h3>
+        {/* Right Panel - Form */}
+        <div
+          className={`bg-cream p-5 sm:p-6 lg:p-8 flex flex-col justify-center transition-all duration-700 delay-200 ease-out ${
+            isSectionVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+          }`}
+        >
+          <div className="max-w-lg mx-auto w-full">
+            <h3 className="text-xl sm:text-2xl font-serif text-charcoal mb-1">
+              Request a Consultation
+            </h3>
+            <p className="text-stone text-sm mb-5">
+              Fill out the form below and I'll get back to you within 24 hours.
+            </p>
 
             {status === 'success' && (
-              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
-                <p className="text-green-800 font-medium">
-                  Thank you for your message! I'll get back to you soon.
-                </p>
+              <div className="mb-8 p-5 bg-sage border border-sage rounded-sm">
+                <div className="flex items-center gap-3">
+                  <CheckCircle className="w-5 h-5 text-charcoal" />
+                  <p className="text-charcoal font-medium">
+                    Thank you for your message! I'll get back to you soon.
+                  </p>
+                </div>
               </div>
             )}
 
             {status === 'error' && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+              <div className="mb-8 p-5 bg-red-50 border border-red-200 rounded-sm">
                 <p className="text-red-800 font-medium">{errorMessage}</p>
               </div>
             )}
 
-            <form className="space-y-6" onSubmit={handleSubmit}>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Name</label>
+            <form className="space-y-4" onSubmit={handleSubmit}>
+              {/* Name & Email Row */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="floating-label-group">
                   <input
                     type="text"
                     name="name"
+                    id="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors"
-                    placeholder="Your Full Name"
+                    placeholder=" "
+                    className="w-full px-3 py-3 pt-5 border-2 border-charcoal/10 rounded-sm bg-white text-charcoal text-sm focus:border-terracotta focus:ring-0 outline-none transition-colors"
                   />
+                  <label htmlFor="name">Your Name</label>
                 </div>
-                <div>
-                  <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Email</label>
+                <div className="floating-label-group">
                   <input
                     type="email"
                     name="email"
+                    id="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors"
-                    placeholder="your.email@school.org"
+                    placeholder=" "
+                    className="w-full px-3 py-3 pt-5 border-2 border-charcoal/10 rounded-sm bg-white text-charcoal text-sm focus:border-terracotta focus:ring-0 outline-none transition-colors"
                   />
+                  <label htmlFor="email">Email Address</label>
                 </div>
               </div>
+
+              {/* Subject */}
               <div>
-                <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Subject</label>
+                <label className="block text-[10px] font-semibold text-stone uppercase tracking-widest mb-2">
+                  Subject
+                </label>
                 <select
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none bg-transparent transition-colors"
+                  className="w-full px-3 py-3 border-2 border-charcoal/10 rounded-sm bg-white text-charcoal text-sm focus:border-terracotta focus:ring-0 outline-none transition-colors cursor-pointer"
                 >
                   <option>School Consultancy</option>
                   <option>School Group Strategic Planning</option>
@@ -185,35 +254,37 @@ const Contact: React.FC = () => {
                   <option>Other Enquiry</option>
                 </select>
               </div>
-              <div>
-                <label className="block text-xs font-bold text-navy/50 uppercase tracking-widest mb-2">Message</label>
+
+              {/* Message */}
+              <div className="floating-label-group">
                 <textarea
                   name="message"
+                  id="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={4}
-                  className="w-full px-4 py-3 border-b-2 border-beige-accent focus:border-navy outline-none transition-colors resize-none"
-                  placeholder="How can I support your institution?"
-                ></textarea>
+                  rows={3}
+                  placeholder=" "
+                  className="w-full px-3 py-3 pt-5 border-2 border-charcoal/10 rounded-sm bg-white text-charcoal text-sm focus:border-terracotta focus:ring-0 outline-none transition-colors resize-none"
+                />
+                <label htmlFor="message">How can I support your institution?</label>
               </div>
-              <button
+
+              {/* Submit Button */}
+              <Button
                 type="submit"
                 disabled={status === 'submitting'}
-                className="w-full bg-navy text-white py-4 rounded-sm font-bold text-sm uppercase tracking-[0.2em] hover:bg-navy-light transition-all shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full bg-charcoal hover:bg-terracotta text-white h-10 font-semibold text-xs uppercase tracking-widest transition-colors duration-300 rounded-sm"
               >
                 {status === 'submitting' ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    SENDING...
-                  </span>
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
                 ) : (
-                  'SEND MESSAGE'
+                  'Send Message'
                 )}
-              </button>
+              </Button>
             </form>
           </div>
         </div>

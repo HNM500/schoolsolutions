@@ -1,0 +1,343 @@
+@import "tailwindcss";
+
+@theme {
+  /* ========================================
+     CALM & CLARITY - Nature-Inspired Palette
+     ======================================== */
+
+  /* Core Brand Colors */
+  --color-sandstone: hsl(35 30% 96%);      /* Section backgrounds */
+  --color-sage: hsl(150 15% 93%);          /* Alternate sections */
+  --color-charcoal: hsl(220 20% 18%);      /* Primary text */
+  --color-terracotta: hsl(16 65% 55%);     /* CTAs, accents */
+  --color-gold: hsl(38 70% 55%);           /* Muted gold accents */
+  --color-cream: hsl(40 40% 97%);          /* Light backgrounds */
+  --color-stone: hsl(30 10% 40%);          /* Secondary text */
+
+  /* Semantic Colors */
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-charcoal);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: var(--color-charcoal);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: var(--color-charcoal);
+  --color-primary: var(--color-charcoal);
+  --color-primary-foreground: hsl(40 40% 97%);
+  --color-secondary: var(--color-terracotta);
+  --color-secondary-foreground: hsl(0 0% 100%);
+  --color-muted: var(--color-sandstone);
+  --color-muted-foreground: var(--color-stone);
+  --color-accent: var(--color-terracotta);
+  --color-accent-foreground: hsl(0 0% 100%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-border: hsl(30 15% 88%);
+  --color-input: hsl(30 15% 88%);
+  --color-ring: var(--color-terracotta);
+
+  /* Font Families */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", "Playfair Display", serif;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ========================================
+   ANIMATION KEYFRAMES
+   ======================================== */
+
+/* Scroll Reveal - Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered Fade In Up */
+@keyframes fadeInUpStagger {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Subtle Float */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Grain texture animation */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* ========================================
+   ANIMATION UTILITIES
+   ======================================== */
+
+/* Reveal animation classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal.visible {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Staggered children */
+.reveal-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.reveal-stagger > *:nth-child(2) { animation-delay: 100ms; }
+.reveal-stagger > *:nth-child(3) { animation-delay: 200ms; }
+.reveal-stagger > *:nth-child(4) { animation-delay: 300ms; }
+.reveal-stagger > *:nth-child(5) { animation-delay: 400ms; }
+
+/* Marquee animation */
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Float animation */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Grain texture overlay */
+.grain-overlay::before {
+  content: '';
+  position: absolute;
+  inset: -200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  animation: grain 8s steps(10) infinite;
+}
+
+/* ========================================
+   FORM FLOATING LABELS
+   ======================================== */
+
+.floating-label-group {
+  position: relative;
+}
+
+.floating-label-group input,
+.floating-label-group textarea {
+  padding-top: 1.25rem;
+}
+
+.floating-label-group label {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  color: var(--color-stone);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.floating-label-group textarea ~ label {
+  top: 1.25rem;
+  transform: translateY(0);
+}
+
+.floating-label-group input:focus ~ label,
+.floating-label-group input:not(:placeholder-shown) ~ label,
+.floating-label-group textarea:focus ~ label,
+.floating-label-group textarea:not(:placeholder-shown) ~ label {
+  top: 0.375rem;
+  font-size: 0.625rem;
+  color: var(--color-terracotta);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* ========================================
+   DECORATIVE ELEMENTS
+   ======================================== */
+
+/* Decorative quotation marks */
+.quote-decoration::before {
+  content: '"';
+  position: absolute;
+  top: -1.5rem;
+  left: -0.5rem;
+  font-family: var(--font-serif);
+  font-size: 8rem;
+  line-height: 1;
+  color: var(--color-sandstone);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-terracotta), var(--color-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Tabular numbers for counters */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ========================================
+   BUTTON ANIMATIONS
+   ======================================== */
+
+.btn-expand {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-expand::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-terracotta);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.btn-expand:hover::before {
+  transform: scaleX(1);
+}
+
+/* ========================================
+   GRAYSCALE HOVER EFFECT
+   ======================================== */
+
+.grayscale-hover {
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.grayscale-hover:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* ========================================
+   REDUCED MOTION ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable float animation */
+  .animate-float {
+    animation: none !important;
+  }
+
+  /* Disable marquee */
+  .animate-marquee {
+    animation: none !important;
+  }
+
+  /* Disable grain texture animation */
+  .grain-overlay::before {
+    animation: none !important;
+  }
+
+  /* Disable scroll reveal animations */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .reveal.visible {
+    animation: none !important;
+  }
+}

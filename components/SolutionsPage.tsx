@@ -1,133 +1,156 @@
-
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { ArrowLeft, Building2 } from 'lucide-react';
 import { SCHOOL_SERVICES, CLIENT_SCHOOLS } from '../constants';
 import ServiceCard from './ServiceCard';
+import { Button } from './ui/button';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const SolutionsPage: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = React.useState(0);
-  const carouselRef = React.useRef<HTMLDivElement>(null);
-
-  // Logic for carousel: rotate every 3 seconds
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === CLIENT_SCHOOLS.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Show 4 schools at once on desktop, fewer on smaller screens
-  const getVisibleCount = () => {
-    if (typeof window === 'undefined') return 4;
-    if (window.innerWidth < 640) return 1;
-    if (window.innerWidth < 1024) return 2;
-    return 4;
-  };
-
-  const visibleCount = getVisibleCount();
-  const shiftPercentage = 100 / visibleCount;
+  const [heroRef, isHeroVisible] = useScrollReveal<HTMLElement>({ threshold: 0.1 });
+  const [servicesRef, areServicesVisible] = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
 
   return (
-    <div className="pt-24 animate-fade-in">
+    <div className="pt-24">
       <Helmet>
         <title>Educational Solutions & Services | GCC Education</title>
         <meta name="description" content="Comprehensive educational consulting services including curriculum development, IB workshops, CIS accreditation support, and professional development for international schools." />
         <link rel="canonical" href="https://gcceducation.com/solutions" />
-        <meta property="og:title" content="Educational Solutions & Services | GCC Education" />
-        <meta property="og:description" content="Comprehensive educational consulting services for international schools worldwide." />
-        <meta property="og:url" content="https://gcceducation.com/solutions" />
       </Helmet>
 
       {/* Hero Section */}
-      <section className="bg-navy py-24 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-block p-1 px-3 bg-beige text-navy text-[10px] font-bold uppercase tracking-widest mb-4">Partnering for Impact</div>
-          <h1 className="text-5xl md:text-7xl font-serif mb-6">Institutional Excellence</h1>
-          <p className="text-beige text-xl max-w-3xl mx-auto">Partnering with international schools to elevate educational standards through strategic intervention and professional growth.</p>
+      <section ref={heroRef} className="bg-charcoal py-16 lg:py-24 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-charcoal via-charcoal to-charcoal/90" />
+        <div
+          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 transition-all duration-700 ease-out ${
+            isHeroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          <span className="inline-block text-xs font-semibold tracking-[0.3em] uppercase text-terracotta mb-6">
+            Partnering for Impact
+          </span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">
+            Institutional{' '}
+            <span className="italic text-gold">Excellence</span>
+          </h1>
+          <p className="text-white/60 text-lg max-w-3xl mx-auto leading-relaxed">
+            Partnering with international schools to elevate educational standards through strategic intervention and professional growth.
+          </p>
         </div>
       </section>
 
-      {/* Full Solutions Section */}
-      <section className="py-24 bg-beige-light">
+      {/* Services Grid */}
+      <section className="py-16 lg:py-24 bg-sandstone">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8 mb-24">
+          <div
+            ref={servicesRef}
+            className={`grid md:grid-cols-2 gap-6 mb-16 transition-all duration-700 ease-out ${
+              areServicesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             {SCHOOL_SERVICES.map((service, idx) => (
               <ServiceCard key={idx} service={service} type="school" />
             ))}
           </div>
 
-          {/* Schools Carousel */}
-          <div className="pt-16 border-t border-beige-accent">
-            <h3 className="text-center text-navy/40 uppercase tracking-[0.4em] text-[10px] font-bold mb-12">Select Schools I've Worked With</h3>
-            
-            <div className="relative group">
-              <div className="overflow-hidden">
-                <div 
-                  className="flex transition-transform duration-1000 ease-in-out"
-                  style={{ 
-                    transform: `translateX(-${(currentIndex * shiftPercentage) % (CLIENT_SCHOOLS.length * shiftPercentage)}%)` 
-                  }}
-                >
-                  {/* Double the list for infinite-like scrolling effect */}
-                  {[...CLIENT_SCHOOLS, ...CLIENT_SCHOOLS].map((school, idx) => (
-                    <div 
-                      key={idx} 
-                      className="flex-shrink-0 px-4"
-                      style={{ width: `${shiftPercentage}%` }}
-                    >
-                      <div className="bg-white p-6 rounded-sm border border-beige-accent h-40 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-md transition-all group/card">
-                        <div className="w-12 h-12 bg-navy/5 rounded-full flex items-center justify-center mb-4 group-hover/card:bg-royal/10 transition-colors overflow-hidden">
-                          {school.logo ? (
-                            <img
-                              src={school.logo}
-                              alt={school.name}
-                              loading="lazy"
-                              width={48}
-                              height={48}
-                              className="w-full h-full object-contain p-1"
-                            />
-                          ) : (
-                            <i className={`fas ${school.icon} text-royal text-xl`}></i>
-                          )}
-                        </div>
-                        <p className="text-[11px] font-bold text-navy uppercase tracking-widest leading-tight">
+          {/* Schools Marquee */}
+          <div className="pt-16 border-t border-white/50">
+            <h3 className="text-center text-stone uppercase tracking-[0.3em] text-xs font-semibold mb-8">
+              Select Schools I've Worked With
+            </h3>
+
+            {/* Marquee Container */}
+            <div className="relative overflow-hidden">
+              {/* Gradient masks */}
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-sandstone to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-sandstone to-transparent z-10 pointer-events-none" />
+
+              {/* Scrolling track */}
+              <div className="flex animate-marquee">
+                {/* First set of logos */}
+                {CLIENT_SCHOOLS.map((school, idx) => (
+                  <div
+                    key={`first-${idx}`}
+                    className="flex-shrink-0 mx-3 sm:mx-4"
+                  >
+                    <div className="bg-white px-5 py-4 min-w-[260px] sm:min-w-[300px] border border-white/80 rounded-sm flex items-center gap-4 group cursor-default">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sandstone rounded-full flex items-center justify-center overflow-hidden shrink-0">
+                        {school.logo ? (
+                          <img
+                            src={school.logo}
+                            alt={school.name}
+                            loading="lazy"
+                            width={64}
+                            height={64}
+                            className="w-12 h-12 sm:w-14 sm:h-14 object-contain"
+                          />
+                        ) : (
+                          <Building2 className="h-8 w-8 text-terracotta" />
+                        )}
+                      </div>
+                      <div className="text-left">
+                        <p className="text-xs font-semibold text-charcoal uppercase tracking-wider leading-tight">
                           {school.name}
                         </p>
-                        <p className="text-[9px] text-royal/60 mt-1 uppercase tracking-tighter">
+                        <p className="text-[10px] text-stone mt-1 uppercase tracking-tight">
                           {school.location}
                         </p>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Navigation Dots */}
-              <div className="flex justify-center gap-2 mt-10">
-                {CLIENT_SCHOOLS.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`w-1.5 h-1.5 rounded-full transition-all ${
-                      currentIndex % CLIENT_SCHOOLS.length === idx ? 'bg-royal w-4' : 'bg-navy/20'
-                    }`}
-                  />
+                  </div>
+                ))}
+                {/* Duplicate set for seamless loop */}
+                {CLIENT_SCHOOLS.map((school, idx) => (
+                  <div
+                    key={`second-${idx}`}
+                    className="flex-shrink-0 mx-3 sm:mx-4"
+                  >
+                    <div className="bg-white px-5 py-4 min-w-[260px] sm:min-w-[300px] border border-white/80 rounded-sm flex items-center gap-4 group cursor-default">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-sandstone rounded-full flex items-center justify-center overflow-hidden shrink-0">
+                        {school.logo ? (
+                          <img
+                            src={school.logo}
+                            alt={school.name}
+                            loading="lazy"
+                            width={64}
+                            height={64}
+                            className="w-12 h-12 sm:w-14 sm:h-14 object-contain"
+                          />
+                        ) : (
+                          <Building2 className="h-8 w-8 text-terracotta" />
+                        )}
+                      </div>
+                      <div className="text-left">
+                        <p className="text-xs font-semibold text-charcoal uppercase tracking-wider leading-tight">
+                          {school.name}
+                        </p>
+                        <p className="text-[10px] text-stone mt-1 uppercase tracking-tight">
+                          {school.location}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Simple Navigation Back */}
-      <section className="py-12 bg-white border-t border-beige-accent/10">
+
+      {/* Back Navigation */}
+      <section className="py-12 bg-white border-t border-sandstone">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <Link to="/" className="text-navy/50 hover:text-navy transition-colors text-sm uppercase tracking-widest font-bold inline-flex items-center gap-2">
-            <i className="fas fa-arrow-left"></i> Back to Home
-          </Link>
+          <Button
+            asChild
+            variant="ghost"
+            className="text-stone hover:text-charcoal font-semibold text-sm uppercase tracking-widest"
+          >
+            <Link to="/">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Home
+            </Link>
+          </Button>
         </div>
       </section>
     </div>

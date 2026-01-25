@@ -1,135 +1,160 @@
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
+import { Button } from './ui/button';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useCountUp } from '../hooks/useCountUp';
 
 interface Props {
   isSummary?: boolean;
 }
 
-interface StatCard {
-  number: string;
+interface StatItem {
+  value: number;
+  suffix: string;
   label: string;
-  description: string;
 }
 
-const About: React.FC<Props> = ({ isSummary = false }) => {
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+const CountUpStat: React.FC<{ stat: StatItem; isVisible: boolean; delay: number }> = ({
+  stat,
+  isVisible,
+  delay,
+}) => {
+  const displayValue = useCountUp(
+    { end: stat.value, suffix: stat.suffix, duration: 2000, delay },
+    isVisible
+  );
 
-  const statCards: StatCard[] = [
-    {
-      number: '25+',
-      label: 'Years Experience',
-      description: 'Deep expertise in international educational standards, management, and accreditation.',
-    },
-    {
-      number: '15+',
-      label: 'Countries Served',
-      description: 'Global footprint across Europe, Africa, Asia, North America, and the Middle East.',
-    },
-    {
-      number: '35+',
-      label: 'International Schools',
-      description: 'Consulting experience with schools of various sizes, curricula and demographic.',
-    },
-    {
-      number: '20+',
-      label: 'Workshops and Conferences',
-      description: 'Facilitation, keynotes, panels on multilingualism, literacy, EdTech, AI and inquiry-based learning.',
-    },
-    {
-      number: '1,000+',
-      label: 'Students Taught',
-      description: 'Experience in British National Curriculum, American Curriculum, French Curriculum, International Baccalaureate, and International Primary Curriculum.',
-    },
+  return (
+    <div className="text-center">
+      <span className="block text-5xl sm:text-6xl lg:text-7xl font-serif text-terracotta font-medium tabular-nums">
+        {displayValue}
+      </span>
+      <span className="block mt-2 text-xs uppercase tracking-[0.2em] text-stone font-semibold">
+        {stat.label}
+      </span>
+    </div>
+  );
+};
+
+const About: React.FC<Props> = ({ isSummary = false }) => {
+  const [sectionRef, isSectionVisible] = useScrollReveal<HTMLElement>({ threshold: 0.2 });
+  const [statsRef, areStatsVisible] = useScrollReveal<HTMLDivElement>({ threshold: 0.3 });
+
+  const stats: StatItem[] = [
+    { value: 20, suffix: '+', label: 'Years Experience' },
+    { value: 15, suffix: '+', label: 'Countries' },
+    { value: 35, suffix: '+', label: 'Schools' },
+    { value: 1000, suffix: '+', label: 'Students' },
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentCardIndex((prevIndex) => (prevIndex + 1) % statCards.length);
-    }, 4000); // Switch every 4 seconds
-
-    return () => clearInterval(interval);
-  }, [statCards.length]);
   return (
-    <section id="about" className="py-24 bg-white dark:bg-navy-dark relative">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="py-16 lg:py-24 bg-white relative overflow-hidden"
+    >
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-sandstone/30 to-transparent pointer-events-none" />
+
+      {/* Additional decorative shape */}
+      <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-sage/10 to-transparent blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Content Column */}
+          <div
+            className={`space-y-6 transition-all duration-700 ease-out ${
+              isSectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             <div>
-              <div className="inline-block p-1 px-3 bg-beige dark:bg-beige/20 text-navy dark:text-beige text-xs font-bold uppercase tracking-widest mb-4">About Me</div>
-              <h2 className="text-4xl md:text-5xl font-serif text-navy dark:text-beige mb-8">Bridging Global Expertise with Local Excellence</h2>
-              <div className="space-y-6 text-gray-700 dark:text-beige/80 leading-relaxed text-lg">
+              <span className="inline-block text-xs font-semibold tracking-[0.3em] uppercase text-terracotta mb-6">
+                About Me
+              </span>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-charcoal leading-[1.1] mb-8">
+                Bridging Global Expertise with{' '}
+                <span className="italic text-terracotta">Local Excellence</span>
+              </h2>
+              <div className="space-y-6 text-stone leading-relaxed text-lg">
                 <p>
                   With over two decades of experience across four continents, I partner with international schools to elevate educational excellence through innovative curriculum design, transformative teacher training, and strategic leadership development.
                 </p>
                 {isSummary ? (
-                  <p className="font-medium text-royal dark:text-beige">
+                  <p className="font-medium text-charcoal">
                     Dedicated to fostering global citizenship, multilingual proficiency, and institutional growth in international school settings.
                   </p>
                 ) : (
-                  <>
-                    <p>
-                      As an IB Workshop Leader and CIS Evaluation Team Chair, I bring a unique perspective that combines high-level institutional oversight with ground-level pedagogical innovation.
-                    </p>
-                  </>
+                  <p>
+                    As an IB Workshop Leader and CIS Evaluation Team Chair, I bring a unique perspective that combines high-level institutional oversight with ground-level pedagogical innovation.
+                  </p>
                 )}
               </div>
             </div>
-            
+
             {isSummary && (
               <div className="pt-4">
-                <a 
-                  href="#/about" 
-                  className="inline-flex items-center gap-3 bg-navy dark:bg-beige text-white dark:text-navy px-8 py-4 rounded-sm font-bold text-sm uppercase tracking-widest hover:bg-navy-light dark:hover:bg-beige-light transition-all shadow-lg group"
+                <Button
+                  asChild
+                  className="bg-charcoal hover:bg-terracotta text-white font-semibold text-sm uppercase tracking-wider group transition-colors duration-300"
                 >
-                  MORE ABOUT ME 
-                  <i className="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                </a>
+                  <a href="/about">
+                    More About Me
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </Button>
               </div>
             )}
           </div>
-          
-          <div className="relative">
-            <div className="absolute -inset-4 bg-beige/10 dark:bg-beige/5 rounded-lg -rotate-3"></div>
-            <div className="relative bg-beige-light dark:bg-navy p-10 border border-beige-accent/20 dark:border-beige/20 rounded-sm min-h-[300px] flex items-center">
-              <div className="w-full">
-                {statCards.map((card, index) => (
-                  <div
-                    key={index}
-                    className={`transition-all duration-700 ${
-                      index === currentCardIndex
-                        ? 'opacity-100 translate-y-0'
-                        : 'opacity-0 translate-y-4 absolute inset-0 pointer-events-none'
-                    }`}
-                  >
-                    <div>
-                      <span className="block text-5xl font-serif text-royal dark:text-beige font-bold mb-2">
-                        {card.number}
-                      </span>
-                      <span className="text-sm uppercase tracking-[0.2em] text-navy dark:text-beige font-bold">
-                        {card.label}
-                      </span>
-                      <p className="mt-2 text-sm text-gray-600 dark:text-beige/70">{card.description}</p>
-                    </div>
-                  </div>
-                ))}
+
+          {/* Image Column */}
+          <div
+            className={`relative transition-all duration-700 delay-200 ease-out ${
+              isSectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+            }`}
+          >
+            {/* Decorative frame offset - Layer 1 */}
+            <div className="absolute -inset-4 border border-terracotta/20 rounded-sm -rotate-2 pointer-events-none" />
+
+            {/* Decorative frame offset - Layer 2 */}
+            <div className="absolute -inset-4 border border-charcoal/10 rounded-sm rotate-1 pointer-events-none" />
+
+            {/* Main image */}
+            <div className="relative">
+              {/* Image */}
+              <div className="relative overflow-hidden rounded-sm bg-sandstone aspect-[4/5]">
+                <img
+                  src="/hero-profile.png"
+                  alt="Soukeina Mamodhoussen"
+                  className="w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent" />
               </div>
             </div>
-            
-            {/* Card indicators */}
-            <div className="flex justify-center gap-2 mt-4">
-              {statCards.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentCardIndex(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentCardIndex
-                      ? 'w-8 bg-royal dark:bg-beige'
-                      : 'w-2 bg-navy/30 dark:bg-beige/30 hover:bg-navy/50 dark:hover:bg-beige/50'
-                  }`}
-                  aria-label={`Go to card ${index + 1}`}
-                />
-              ))}
+
+            {/* Floating credential badge */}
+            <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-white px-6 py-4 shadow-xl rounded-sm border-l-4 border-terracotta">
+              <p className="text-sm font-serif font-semibold text-charcoal">Educational Management Expert</p>
+              <p className="text-xs text-stone mt-1 uppercase tracking-wider">CIS Evaluation Team Chair</p>
             </div>
+          </div>
+        </div>
+
+        {/* Stats Section with Count-up */}
+        <div
+          ref={statsRef}
+          className={`mt-16 lg:mt-20 pt-16 border-t border-sandstone transition-all duration-700 ease-out ${
+            areStatsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {stats.map((stat, index) => (
+              <CountUpStat
+                key={stat.label}
+                stat={stat}
+                isVisible={areStatsVisible}
+                delay={index * 150}
+              />
+            ))}
           </div>
         </div>
       </div>

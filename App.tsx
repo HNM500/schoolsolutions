@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -65,22 +64,20 @@ const ScrollToTop: React.FC = () => {
 
 function App() {
   return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-beige-light dark:bg-navy-dark transition-colors duration-300">
-        <ScrollToTop />
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/solutions" element={<SolutionsPage />} />
-            <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/resources/multilingual-identities" element={<MultilingualIdentitiesArticle />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </ThemeProvider>
+    <div className="min-h-screen bg-background">
+      <ScrollToTop />
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/solutions" element={<SolutionsPage />} />
+          <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/resources/multilingual-identities" element={<MultilingualIdentitiesArticle />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
